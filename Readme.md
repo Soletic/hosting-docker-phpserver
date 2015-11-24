@@ -22,7 +22,7 @@ $ docker run -d --name=example.phpserver -e WORKER_NAME=example WORKER_UID=10001
 * WORKER_NAME : a name without spaces and used to setup unix account
 * HOST_DOMAIN_NAME : default domain name used to setup apache
 
-### Full lamp example with mounting /path/example containing your data and app
+### Full lamp example with data stored by docker host
 
 Install mysql image
 
@@ -36,11 +36,12 @@ $ docker build -t soletic/phpmyadmin ./phpmyadmin
 And run :
 
 ```
-$ mkdir -p /path/example/html
-$ echo "Default page" > /path/example/html/index.html
+$ mkdir -p /path/example/www/{logs,conf,html,cgi-bin}
+$ mkdir -p /path/example/www/conf/{apache2,certificates}
+$ echo "Default page" > /path/example/www/index.html
 $ docker run -d --name=example.mysql -e WORKER_NAME=example -v /path/example/backup:/var/lib/mysql/backup -p 20136:3306 soletic/mysql
 $ docker run -d --name=example.dbadmin --link example.mysql:mysql -p 20181:80 soletic/phpmyadmin
-$ docker run -d --name=example.phpserver -e WORKER_NAME=example -e WORKER_UID=10001 -e HOST_DOMAIN_NAME=example.org --link example.mysql:mysql -p 20180:80 -v /path/example:/var/www soletic/phpserver
+$ docker run -d --name=example.phpserver -e WORKER_NAME=example -e WORKER_UID=10001 -e HOST_DOMAIN_NAME=example.org --link example.mysql:mysql -p 20180:80 -p 20143:443 -v /path/example/www:/var/www soletic/phpserver
 ```
 
 ## Running options

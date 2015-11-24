@@ -1,0 +1,28 @@
+<VirtualHost *:80>
+        Include /var/www/conf/apache2/default.confsite
+</VirtualHost>
+<VirtualHost *:443>
+        SSLEngine on
+        SSLProtocol all -SSLv2 -SSLv3
+        SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM
+
+        SSLCertificateFile /var/www/conf/certificates/default.pem
+        SSLCertificateKeyFile /var/www/conf/certificates/default.key
+        #SSLCertificateChainFile /path/to/file.pem
+
+        <FilesMatch "\.(cgi|shtml|phtml|php)$">
+                        SSLOptions +StdEnvVars
+        </FilesMatch>
+        <Directory /var/www/cgi-bin>
+                SSLOptions +StdEnvVars
+        </Directory>
+
+        BrowserMatch "MSIE [2-6]" \
+                        nokeepalive ssl-unclean-shutdown \
+                        downgrade-1.0 force-response-1.0
+        # MSIE 7 and newer should be able to use keepalive
+        BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+
+        # Include siteconf
+        Include /var/www/conf/apache2/default.confsite
+</VirtualHost>

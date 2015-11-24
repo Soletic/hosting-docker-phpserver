@@ -1,0 +1,33 @@
+ServerName localhost
+ServerAlias localhost_alias
+
+DocumentRoot /var/www/html
+<Directory />
+        Options FollowSymLinks
+        AllowOverride None
+</Directory>
+<Directory /var/www/html>
+        Options Indexes FollowSymLinks MultiViews
+        # To make wordpress .htaccess work
+        AllowOverride FileInfo
+        Order allow,deny
+        allow from all
+</Directory>
+
+ScriptAlias /cgi-bin/ /var/www/cgi-bin/
+<Directory "/usr/lib/cgi-bin">
+        AllowOverride None
+        Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+        Order allow,deny
+        Allow from all
+</Directory>
+
+# Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+LogLevel warn
+ErrorLog /var/www/logs/vhost-%HOST_DOMAIN_NAME%-error.log
+CustomLog /var/www/logs/vhost-%HOST_DOMAIN_NAME%-access.log combined
+
+#
+# Set HTTPS environment variable if we came in over secure
+#  channel.
+SetEnvIf x-forwarded-proto https HTTPS=on
