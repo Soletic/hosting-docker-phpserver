@@ -31,6 +31,10 @@ ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
 ENV PHP_MEMORY_LIMIT 256M
 
+# Apache options has environment
+ENV SERVER_MAIL ""
+ENV HOST_DOMAIN_ALIAS ""
+
 # VOLUMES
 VOLUME ["${DATA_VOLUME_HOME}", "${DATA_VOLUME_LOGS}", "${DATA_VOLUME_WWWW}"]
 
@@ -47,7 +51,7 @@ RUN mkdir -p /var/www/logs /var/www/conf/apache2 /var/www/conf/certificates /var
 
 RUN echo "/1 * * * * root /root/scripts/apache2ctl.sh > /dev/null 2>&1" >> /etc/crontab
 
+EXPOSE 80 443
+
 # MAKE SCRIPT EXCUTABLE
 RUN chmod 755 /root/scripts/*.sh
-
-EXPOSE 80 443

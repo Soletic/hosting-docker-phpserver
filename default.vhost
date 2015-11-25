@@ -6,8 +6,8 @@
         SSLProtocol all -SSLv2 -SSLv3
         SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM
 
-        SSLCertificateFile /var/www/conf/certificates/default.pem
-        SSLCertificateKeyFile /var/www/conf/certificates/default.key
+        SSLCertificateFile /var/www/conf/certificates/%HOST_DOMAIN_NAME%.crt
+        SSLCertificateKeyFile /var/www/conf/certificates/%HOST_DOMAIN_NAME%.key
         #SSLCertificateChainFile /path/to/file.pem
 
         <FilesMatch "\.(cgi|shtml|phtml|php)$">

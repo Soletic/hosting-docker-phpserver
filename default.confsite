@@ -1,5 +1,6 @@
 ServerName localhost
-ServerAlias localhost_alias
+#ServerAlias localhost_alias
+#ServerAdmin contact@localhost
 
 DocumentRoot /var/www/html
 <Directory />

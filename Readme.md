@@ -53,3 +53,5 @@ The image define many environment variables to configure the image running :
 * PHP_POST_MAX_SIZE (default 10M)
 * PHP_MEMORY_LIMIT (default  256M)
 * WORKER_UID : system user id used to set the user id of www-data, the owner of /var/www.
+* SERVER_MAIL : email used to setup admin information of certificates and vhosts
+* HOST_DOMAIN_ALIAS : List of domains and subdomains as alias of default vhost
