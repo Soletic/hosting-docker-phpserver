@@ -16,11 +16,13 @@ RUN apt-get -y update && \
   apt-get -y install git apache2 libapache2-mod-php5 mysql-client php5-mysql pwgen php-apc php5-mcrypt php5-intl php5-curl
 RUN apt-get -y install libapache2-mod-perl2
 RUN a2enmod rewrite expires headers include perl reqtimeout socache_shmcb ssl
+RUN apt-get -y install nullmailer
 
 # Environment variables of data
 ENV DATA_VOLUME_LOGS /var/log
 ENV DATA_VOLUME_WWWW /var/www
 ENV DATA_VOLUME_HOME /home
+ENV DATA_VOLUME_MAIL /var/spool/nullmailer/queue
 
 # Environment variables to configure apache
 ENV APACHE_SERVER_NAME ${HOST_DOMAIN_NAME}
@@ -36,9 +38,9 @@ ENV SERVER_MAIL ""
 ENV HOST_DOMAIN_ALIAS ""
 
 # VOLUMES
-VOLUME ["${DATA_VOLUME_HOME}", "${DATA_VOLUME_LOGS}", "${DATA_VOLUME_WWWW}"]
+VOLUME ["${DATA_VOLUME_HOME}", "${DATA_VOLUME_LOGS}", "${DATA_VOLUME_WWWW}", "${DATA_VOLUME_MAIL}"]
 
-# ADD FILES TO FILE SYSTEM
+# ADD FILES TO RUN APACHE
 ADD start-apache2.sh /root/scripts/start-apache2.sh
 ADD apache2ctl.sh /root/scripts/apache2ctl.sh
 ADD supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
@@ -49,7 +51,12 @@ RUN sed -ri -e "s~^IncludeOptional sites-enabled.*~IncludeOptional /var/www/conf
 
 RUN mkdir -p /var/www/logs /var/www/conf/apache2 /var/www/conf/certificates /var/www/cgi-bin
 
+# Cron job to reload or restart apache if file has been touched
 RUN echo "/1 * * * * root /root/scripts/apache2ctl.sh > /dev/null 2>&1" >> /etc/crontab
+
+# ADD FILES TO RUN NULLMAILER
+ADD start-nullmailer.sh /root/scripts/start-nullmailer.sh
+ADD supervisord-nullmailer.conf /etc/supervisor/conf.d/supervisord-nullmailer.conf
 
 EXPOSE 80 443
 
