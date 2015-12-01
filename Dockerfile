@@ -16,13 +16,13 @@ RUN apt-get -y update && \
   apt-get -y install git apache2 libapache2-mod-php5 mysql-client php5-mysql pwgen php-apc php5-mcrypt php5-intl php5-curl
 RUN apt-get -y install libapache2-mod-perl2
 RUN a2enmod rewrite expires headers include perl reqtimeout socache_shmcb ssl
-RUN apt-get -y install nullmailer
+RUN apt-get -y install nullmailer uuid-runtime
 
 # Environment variables of data
 ENV DATA_VOLUME_LOGS /var/log
 ENV DATA_VOLUME_WWWW /var/www
 ENV DATA_VOLUME_HOME /home
-ENV DATA_VOLUME_MAIL /var/spool/nullmailer/queue
+ENV DATA_VOLUME_MAIL /home/mail
 
 # Environment variables to configure apache
 ENV APACHE_SERVER_NAME ${HOST_DOMAIN_NAME}
@@ -54,7 +54,11 @@ RUN mkdir -p /var/www/logs /var/www/conf/apache2 /var/www/conf/certificates /var
 # Cron job to reload or restart apache if file has been touched
 RUN echo "/1 * * * * root /root/scripts/apache2ctl.sh > /dev/null 2>&1" >> /etc/crontab
 
-# ADD FILES TO RUN NULLMAILER
+# ADD RUN NULLMAILER
+# SMTP parameters like this : <host>:<port>:<user>:<password>:<no|ssl>:<no|starttls>
+ENV MAILER_SMTP ""
+ENV MAILER_LIMIT_QUEUE_HACK 200
+ENV MAILER_SENDER_ENVELOPE ""
 ADD start-nullmailer.sh /root/scripts/start-nullmailer.sh
 ADD supervisord-nullmailer.conf /etc/supervisor/conf.d/supervisord-nullmailer.conf
 

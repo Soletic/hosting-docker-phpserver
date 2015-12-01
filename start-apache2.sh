@@ -21,6 +21,10 @@ if [ ! -z ${HOST_DOMAIN_ALIAS} ]; then
 	sed -ri -e "s/#ServerAlias.*/ServerAlias $server_alias/" /etc/apache2/templates/default.confsite
 fi
 
+# Log rotate
+sed -ri -e "s~/var/log/apache2~/var/www/logs~" /etc/logrotate.d/apache2
+sed -ri -e "s~daily~weekly~" -e "s~rotate.*~rotate 12" /etc/logrotate.d/apache2
+sed -ri -e "s~missingok~missingok\n\tsize 10M~" /etc/logrotate.d/apache2
 
 usermod -u ${WORKER_UID} www-data
 groupmod -g ${WORKER_UID} www-data
