@@ -31,8 +31,6 @@ cat > /etc/logrotate.d/nullmailer <<-EOF
 				compress
 				delaycompress
 				notifempty
-				create 640 root adm
-				sharedscripts
 				size 10M
 			}
 		EOF
@@ -190,7 +188,7 @@ do
 		fi
 		continue
 	fi
-	
+
 	# ###### 
 	# Check if app hasn't been hacked and send too much mails
 	# ######
