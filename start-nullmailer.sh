@@ -226,23 +226,24 @@ do
 
 	# #######
 	# Move or send queued files
-	# To avoid problem with mail queuing, we move only mails whose size will not change and 1 second older
+	# To avoid problem with mail queuing, we move only mails whose size will not change during 0.1 seconds
 	#######
 	shopt -s nullglob
 	mails=(/var/spool/nullmailer/queue/*)
 	for mailfile in "${mails[@]}"; do
 		mailsize=$(du -k $mailfile | cut -f 1)
-		sleep 2
+		sleep 0.1
 		mailsize2=$(du -k $mailfile | cut -f 1)
 		if [ $mailsize -eq $mailsize2 ]; then
 			# Change sender
 			nullmailer_override_envelope $mailfile
-			# Send
+			# Send/Move
 			if [ "${MAILER_SMTP}" = "" ]; then
+				# Move the home mail queue
 				mv $mailfile ${DATA_VOLUME_MAIL}/queue/$(basename $mailfile)
 				chown -R ${WORKER_UID}:${WORKER_UID} ${DATA_VOLUME_MAIL}/queue/$(basename $mailfile)
 			else
-				# Send mail (todo)
+				# Send mail
 				cmd="/usr/lib/nullmailer/smtp $smtp_options < $mailfile"
 				eval "$( (/usr/lib/nullmailer/smtp $smtp_options < $mailfile && exitcode=$? >&2 ) 2> >(errorlog=$(cat); typeset -p errorlog) > >(stdoutlog=$(cat); typeset -p stdoutlog); exitcode=$?; typeset -p exitcode )"
 				#errorlog=$( { /usr/lib/nullmailer/smtp $smtp_options $smtp_options < $mailfile; } 2>&1 )

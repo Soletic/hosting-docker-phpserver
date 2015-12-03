@@ -23,7 +23,7 @@ fi
 
 # Log rotate
 sed -ri -e "s~/var/log/apache2~/var/www/logs~" /etc/logrotate.d/apache2
-sed -ri -e "s~daily~weekly~" -e "s~rotate.*~rotate 12" /etc/logrotate.d/apache2
+sed -ri -e "s~daily~weekly~" -e "s~rotate.*~rotate 12~" /etc/logrotate.d/apache2
 sed -ri -e "s~missingok~missingok\n\tsize 10M~" /etc/logrotate.d/apache2
 
 usermod -u ${WORKER_UID} www-data
