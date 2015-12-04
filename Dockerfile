@@ -68,4 +68,4 @@ EXPOSE 80 443
 RUN chmod 755 /root/scripts/*.sh
 
 # Remove alert stderr php5sessionclean
-RUN sed -i -e "$(grep -n "sessionclean" /etc/cron.d/php5 | grep -Eo '^[^:]+')s~$~ > /dev/null~" /etc/cron.d/php5
+RUN sed -i -e "$(grep -n "sessionclean" /etc/cron.d/php5 | grep -Eo '^[^:]+')s~$~ > /dev/null 2>&1~" /etc/cron.d/php5
