@@ -52,7 +52,7 @@ RUN sed -ri -e "s~^IncludeOptional sites-enabled.*~IncludeOptional /var/www/conf
 RUN mkdir -p /var/www/logs /var/www/conf/apache2 /var/www/conf/certificates /var/www/cgi-bin
 
 # Cron job to reload or restart apache if file has been touched
-RUN echo "/1 * * * * root /root/scripts/apache2ctl.sh > /dev/null 2>&1" >> /etc/crontab
+RUN echo "* * * * * root /root/scripts/apache2ctl.sh > /dev/null 2>&1" >> /etc/crontab
 
 # ADD RUN NULLMAILER
 # SMTP parameters like this : <host>:<port>:<user>:<password>:<no|ssl>:<no|starttls>
