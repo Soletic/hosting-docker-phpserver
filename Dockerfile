@@ -18,6 +18,9 @@ RUN apt-get -y install libapache2-mod-perl2
 RUN a2enmod rewrite expires headers include perl reqtimeout socache_shmcb ssl
 RUN apt-get -y install nullmailer uuid-runtime
 
+# Addons PHP5
+RUN apt-get -y update && apt-get -y install php5-gd
+
 # Environment variables of data
 ENV DATA_VOLUME_LOGS /var/log
 ENV DATA_VOLUME_WWWW /var/www
