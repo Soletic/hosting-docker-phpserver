@@ -9,8 +9,8 @@ sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILE
     -e "s/^;date\.timezone.*/date.timezone = $(echo ${PHP_TIME_ZONE} | sed -e 's/\//\\\//g')/" /etc/php5/apache2/php.ini
 
 # Add  MAILTO to cron if not exist
-if [ $(cat /etc/crontab | grep ^MAITO | wc -l) -eq 0 ]; then
-	sed -i "$(grep -n ^PATH /etc/crontab | grep -Eo '^[^:]+') a MAILTO=${SERVER_MAIL}" /etc/crontab
+if [ $(cat /etc/crontab | grep ^MAILTO | wc -l) -eq 0 ]; then
+	sed -i "$(grep -n ^PATH /etc/crontab | grep -Eo '^[^:]+') a MAILTO=\"${SERVER_MAIL}\"" /etc/crontab
 fi
 
 # setup apache template 

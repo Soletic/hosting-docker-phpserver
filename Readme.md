@@ -7,8 +7,10 @@ This docker image is a based image to create apache php server
 ```
 $ git clone https://github.com/Soletic/hosting-docker-ubuntu.git ./ubuntu
 $ git clone https://github.com/Soletic/hosting-docker-mysql.git ./mysql
+$ git clone https://github.com/Soletic/hosting-docker-phpserver.git ./phpserver
 $ docker build --pull -t soletic/ubuntu ./ubuntu
 $ docker build -t soletic/mysql ./mysql
+$ docker build -t soletic/phpserver ./phpserver
 ```
 
 ## Run the image
@@ -16,7 +18,7 @@ $ docker build -t soletic/mysql ./mysql
 ### Basic example
 
 ```
-$ docker run -d -h example.org --name=example.phpserver -e WORKER_NAME=example WORKER_UID=10001 -e HOST_DOMAIN_NAME=example.org soletic/phpserver
+$ docker run -d -h example.org --name=example.phpserver -e WORKER_NAME=example -e WORKER_UID=10001 -e HOST_DOMAIN_NAME=example.org soletic/phpserver
 ```
 
 * WORKER_NAME : a name without spaces and used to setup unix account
