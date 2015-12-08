@@ -53,5 +53,7 @@ if [ $crt_total -eq 0 ]; then
 	fi
 fi;
 
+chown -R ${WORKER_UID} ${DATA_VOLUME_WWWW}/conf/apache2
+
 source /etc/apache2/envvars
 exec apache2 -D FOREGROUND
