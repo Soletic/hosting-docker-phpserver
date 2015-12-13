@@ -14,7 +14,6 @@ if [ $(cat /etc/crontab | grep ^MAILTO | wc -l) -eq 0 ]; then
 fi
 
 # setup apache
-sed -ri -e "s/Options Indexes FollowSymLinks$/Options -Indexes -FollowSymLinks/" /etc/apache2/apache2.conf
 sed -ri -e "s/ServerName.*/ServerName ${HOST_DOMAIN_NAME}/" \
     -e "s/%HOST_DOMAIN_NAME%/${HOST_DOMAIN_NAME}/" /etc/apache2/templates/default.confsite
 sed -ri "s/%HOST_DOMAIN_NAME%/${HOST_DOMAIN_NAME}/" /etc/apache2/templates/default.vhost
