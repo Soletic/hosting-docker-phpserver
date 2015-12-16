@@ -5,7 +5,7 @@ ServerName localhost
 DocumentRoot /var/www/html
 <Directory /var/www/html>
         # To make wordpress .htaccess work
-        AllowOverride FileInfo
+        AllowOverride FileInfo AuthConfig Indexes Limit
         Order allow,deny
         allow from all
 </Directory>
