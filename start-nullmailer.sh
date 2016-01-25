@@ -186,6 +186,7 @@ do
 			# Change last access and modify date for next time
 			touch -d "1 minutes ago" ${DATA_VOLUME_MAIL}/stopped
 		fi
+		mails_queued_last_120s=0
 		continue
 	fi
 

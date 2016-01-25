@@ -21,6 +21,9 @@ RUN apt-get -y install nullmailer uuid-runtime
 # Addons PHP5
 RUN apt-get -y update && apt-get -y install php5-gd
 
+# Addons Mongo
+RUN apt-get -y update && apt-get -y install php5-mongo
+
 # Environment variables of data
 ENV DATA_VOLUME_LOGS /var/log
 ENV DATA_VOLUME_WWWW /var/www
