@@ -166,7 +166,7 @@ last_queue_checking=$(date +"%s")
 mails_queued_last_120s=0
 while true
 do
-	sleep 2
+	sleep $(( ( RANDOM % 25 )  + 20 ))
 
 	# ###### 
 	# Rm older mails
