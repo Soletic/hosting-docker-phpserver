@@ -41,7 +41,7 @@ cat > /etc/logrotate.d/nullmailer <<-EOF
 if [ "${MAILER_SMTP}" != "" ]; then
 	# Configure smtp command
 	IFS=':' read -ra smtp_parameters <<< "${MAILER_SMTP}"
-	smtp_options="--insecure"
+	smtp_options=""
 	for (( i = 0; i < ${#smtp_parameters[@]}; i++ )); do
 		case "$i" in
 			0)
