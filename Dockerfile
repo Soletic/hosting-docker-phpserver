@@ -9,20 +9,12 @@ ENV HOST_DOMAIN_NAME soletic.org
 # Tools system
 RUN apt-get update && \
   apt-get -y install software-properties-common python-software-properties && \
-  add-apt-repository -y ppa:ondrej/php5-5.6
+  add-apt-repository -y ppa:ondrej/php
 
 # APACHE GIT PHP5 MYSQL CLIENT
 RUN apt-get -y update && \
-  apt-get -y install git apache2 libapache2-mod-php5 mysql-client php5-mysql pwgen php-apc php5-mcrypt php5-intl php5-curl
-RUN apt-get -y install libapache2-mod-perl2
+  apt-get -y install php5.6 git apache2 libapache2-mod-php5.6 mysql-client php5.6-mysql pwgen php5.6-mcrypt php5.6-intl php5.6-curl php5.6-gd php5.6-mongo libapache2-mod-perl2 nullmailer uuid-runtime
 RUN a2enmod rewrite expires headers include perl reqtimeout socache_shmcb ssl
-RUN apt-get -y install nullmailer uuid-runtime
-
-# Addons PHP5
-RUN apt-get -y update && apt-get -y install php5-gd
-
-# Addons Mongo
-RUN apt-get -y update && apt-get -y install php5-mongo
 
 # Environment variables of data
 ENV DATA_VOLUME_LOGS /var/log
@@ -74,4 +66,4 @@ EXPOSE 80 443
 RUN chmod 755 /root/scripts/*.sh
 
 # Remove alert stderr php5sessionclean
-RUN sed -i -e "$(grep -n "sessionclean" /etc/cron.d/php5 | grep -Eo '^[^:]+')s~$~ > /dev/null 2>&1~" /etc/cron.d/php5
+# RUN sed -i -e "$(grep -n "sessionclean" /etc/cron.d/php5 | grep -Eo '^[^:]+')s~$~ > /dev/null 2>&1~" /etc/cron.d/php5
