@@ -16,6 +16,9 @@ RUN apt-get -y update && \
   apt-get -y install php5.6 git apache2 libapache2-mod-php5.6 mysql-client php5.6-mysql pwgen php5.6-mcrypt php5.6-intl php5.6-curl php5.6-gd php5.6-mongo libapache2-mod-perl2 nullmailer uuid-runtime
 RUN a2enmod rewrite expires headers include perl reqtimeout socache_shmcb ssl
 
+# Add 2016-11-16
+RUN apt-get -y install php5.6-dom php5.6-zip php5.6-mbstring
+
 # Environment variables of data
 ENV DATA_VOLUME_LOGS /var/log
 ENV DATA_VOLUME_WWWW /var/www
